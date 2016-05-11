@@ -10,6 +10,9 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/user');
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/nodejs-tp-final-2016');
+
 var app = express();
 
 var env = process.env.NODE_ENV || 'development';
