@@ -27,3 +27,13 @@ app.post('/panel/employees/new', function(req, res){
 		}    
 	});
 });
+
+app.get('/panel/employees/delete/:id', function(req, res){
+    Employees.remove({ _id: req.params.id }, function(err, doc){
+        if(!err){
+            res.redirect('/panel/employees');
+        } else {
+            res.end(err);    
+        }    
+    });
+});
