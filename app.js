@@ -1,4 +1,6 @@
-
+process.on(‘uncaughtException’, function(e) {
+	console.log(e);
+});
 
 var express = require('express');
 var path = require('path');
