@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var Employee = require('../models/employees.js');
+var Employee = require('../../../models/employees.js');
 
 describe('Test of employees', function(){
 	before(function(done) {
