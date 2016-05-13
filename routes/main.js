@@ -37,3 +37,32 @@ app.get('/panel/employees/delete/:id', function(req, res){
         }    
     });
 });
+
+app.get('/panel/employees/edit/:id', function(req, res){
+    Employees.findOne({ _id: req.params.id }, function(err, doc){
+        if(!err){
+            res.render('edit', { title: 'Edit', employee: doc});
+        } else {
+            res.end(err);
+        }    
+    });
+});
+
+app.post('/panel/employees/edit/:id', function(req, res){
+    Employees.findOne({ _id: req.params.id }, function(err, doc){
+        if(!err){
+            doc.firstName = req.body.firstName;
+            doc.lastName = req.body.lastName;
+            doc.email = req.body.email;
+            doc.save(function(err, doc){
+                if(!err){
+                    res.redirect('/panel/employees');
+                } else {
+                    res.end(err);    
+                }    
+            }); 
+        } else {
+            res.end(err);    
+        }
+    });
+});
