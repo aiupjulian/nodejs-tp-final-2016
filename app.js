@@ -13,7 +13,7 @@ var users = require('./routes/user');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/nodejs-tp-final-2016');
 
-var app = express();
+var app = exports.app = express();
 
 var env = process.env.NODE_ENV || 'development';
 app.locals.ENV = env;
@@ -35,6 +35,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+
+require('./routes/main.js');
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
