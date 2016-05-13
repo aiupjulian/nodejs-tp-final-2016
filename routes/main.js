@@ -3,6 +3,6 @@ var Employees = require('../models/employees.js');
 
 app.get('/panel/employees', function(req, res){
 	Employees.find({}, function(err,docs){
-		res.json(docs);
+		res.render('list', { title: 'List', employees: docs });
 	});
 });
