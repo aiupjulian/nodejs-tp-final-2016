@@ -8,12 +8,20 @@ app.get('/panel/employees', function(req, res){
 });
 
 app.get('/panel/employees/new', function(req, res){
-	res.render('new', { title: 'New'});
+	res.render('new', { title: 'New' });
 });
 
 app.post('/panel/employees/new', function(req, res){
 	console.log(req.body);
-	var e = new Employees({
+    req.checkBody('password', 'Passwords do not match').equals(req.body.confirm);
+    req.checkBody('email', 'Invalid email').isEmail();
+    var errors = req.validationErrors();
+    if(errors) {
+        errors = errors.map(function(a) {return a.msg;});
+        res.render('new', { title: 'New', errors: errors, params: req.body });
+        return;
+    }
+    var e = new Employees({
 		firstName: req.body.firstName,
 		lastName: req.body.lastName,
 		email: req.body.email,

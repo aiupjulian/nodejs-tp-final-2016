@@ -2,16 +2,29 @@ extends layout
 
 block content
   h1= title
+  if errors
+    ul
+      each val in errors
+        li=val
   form(action='',method='post')
     div
       label(for='firstName') First name:
-      input(type='text', name='firstName', id='firstName', placeholder='First name...')
+      if !errors
+        input(type='text', name='firstName', id='firstName', placeholder='First name...')
+      else
+        input(type='text', name='firstName', id='firstName', placeholder='First name...', value=params.firstName)
     div
       label(for='lastName') Last name:
-      input(type='text', name='lastName', id='lastName', placeholder='Last name...')
+      if !errors  
+        input(type='text', name='lastName', id='lastName', placeholder='Last name...')
+      else
+        input(type='text', name='lastName', id='lastName', placeholder='Last name...', value=params.lastName)
     div
       label(for='email') Email:
-      input(type='text', name='email', id='email', placeholder='Email...')
+      if !errors
+        input(type='text', name='email', id='email', placeholder='Email...')
+      else
+        input(type='text', name='email', id='email', placeholder='Email...', value=params.email)
     div
       label(for='password') Password:
       input(type='password', name='password', id='password', placeholder='Password...')
