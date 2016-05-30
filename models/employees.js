@@ -15,6 +15,10 @@ employeeSchema.pre("save", function(next) {
     next();
 });
 
+employeeSchema.method('authenticate', function(password) {
+    return crypto.createHash('md5').update(password).digest("hex") === this.password;
+});
+
 var employeeModel = mongoose.model('Employees', employeeSchema);
 
 module.exports = employeeModel;
