@@ -14,7 +14,11 @@ var routes = require('./routes/index');
 var users = require('./routes/user');
 
 var mongoose = require('mongoose');
+var fixtures = require('mongoose-fixtures');
 mongoose.connect('mongodb://localhost/nodejs-tp-final-2016');
+
+fixtures.load('./fixtures/admins.js');
+fixtures.load('./fixtures/employees.js');
 
 var app = exports.app = express();
 
