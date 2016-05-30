@@ -15,4 +15,8 @@ describe('Test of employees', function(){
 		});
 		e.save(done);
 	});
+
+    after(function(done) {
+        mongoose.connection.close(done);
+    });
 });
