@@ -75,3 +75,11 @@ app.post('/panel/employees/edit/:id', function(req, res){
         }
     });
 });
+
+app.get('/admin', function(req, res) {
+    res.render('admin', { title: 'Login' });
+});
+
+app.post('/admin', function(req,res) {
+    res.json(req.body);
+});
