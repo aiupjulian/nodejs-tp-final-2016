@@ -3,17 +3,27 @@ var passport = module.parent.exports.passport;
 var Employees = require('../models/employees.js');
 var Admins = require('../models/admins.js');
 
+var adminAuth = function(req, res, next) {
+    if(typeof req.user != "undefined") {
+        //Authorized
+        next();
+    } else {
+        //Not authorized, redirect
+        res.redirect('/admin');
+    }
+}
+
 app.get('/panel/employees', function(req, res){
 	Employees.find({}, function(err,docs){
 		res.render('list', { title: 'List', employees: docs });
 	});
 });
 
-app.get('/panel/employees/new', function(req, res){
+app.get('/panel/employees/new', adminAuth, function(req, res){
 	res.render('new', { title: 'New' });
 });
 
-app.post('/panel/employees/new', function(req, res){
+app.post('/panel/employees/new', adminAuth, function(req, res){
 	console.log(req.body);
     req.checkBody('password', 'Passwords do not match').equals(req.body.confirm);
     req.checkBody('email', 'Invalid email').isEmail();
@@ -38,7 +48,7 @@ app.post('/panel/employees/new', function(req, res){
 	});
 });
 
-app.get('/panel/employees/delete/:id', function(req, res){
+app.get('/panel/employees/delete/:id', adminAuth, function(req, res){
     Employees.remove({ _id: req.params.id }, function(err, doc){
         if(!err){
             res.redirect('/panel/employees');
@@ -48,7 +58,7 @@ app.get('/panel/employees/delete/:id', function(req, res){
     });
 });
 
-app.get('/panel/employees/edit/:id', function(req, res){
+app.get('/panel/employees/edit/:id', adminAuth, function(req, res){
     Employees.findOne({ _id: req.params.id }, function(err, doc){
         if(!err){
             res.render('edit', { title: 'Edit', employee: doc});
@@ -58,7 +68,7 @@ app.get('/panel/employees/edit/:id', function(req, res){
     });
 });
 
-app.post('/panel/employees/edit/:id', function(req, res){
+app.post('/panel/employees/edit/:id', adminAuth, function(req, res){
     Employees.findOne({ _id: req.params.id }, function(err, doc){
         if(!err){
             doc.firstName = req.body.firstName;
