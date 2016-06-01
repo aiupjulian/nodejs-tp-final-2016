@@ -8,6 +8,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var flash = require('connect-flash');
 var expressValidator = require('express-validator');
 var passport = exports.passport = require('passport');
 
@@ -15,11 +17,13 @@ var routes = require('./routes/index');
 var users = require('./routes/user');
 
 var mongoose = require('mongoose');
+//SACAR CUANDO TERMINE (VA EN TESTS)
 var fixtures = require('mongoose-fixtures');
 mongoose.connect('mongodb://localhost/nodejs-tp-final-2016');
 
-fixtures.load('./fixtures/admins.js');
-fixtures.load('./fixtures/employees.js');
+//SACAR CUANDO TERMINE
+fixtures.load('./test/fixtures/admins.js');
+fixtures.load('./test/fixtures/employees.js');
 
 var app = exports.app = express();
 
@@ -41,8 +45,10 @@ app.use(bodyParser.urlencoded({
 app.use(expressValidator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({secret: 'supersecret', saveUninitialized: true, resave: true}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 require('./auth/local-strategy.js');
 
