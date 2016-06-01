@@ -1,4 +1,5 @@
 var app = module.parent.exports.app;
+var passport = module.parent.exports.passport;
 var Employees = require('../models/employees.js');
 var Admins = require('../models/admins.js');
 
@@ -77,9 +78,13 @@ app.post('/panel/employees/edit/:id', function(req, res){
 });
 
 app.get('/admin', function(req, res) {
-    res.render('admin', { title: 'Login' });
+    res.render('admin', { title: 'Login', error: req.flash('error') });
 });
 
-app.post('/admin', function(req,res) {
-    res.json(req.body);
-});
+app.post('/admin', passport.authenticate('AdminLogin',
+    {
+        successRedirect: '/panel/employees',
+        failureRedirect: '/admin',
+        failureFlash: true
+    }
+));
