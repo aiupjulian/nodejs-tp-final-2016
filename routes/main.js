@@ -13,7 +13,12 @@ var adminAuth = function(req, res, next) {
     }
 }
 
-app.get('/panel/employees', function(req, res){
+app.use(function(req, res, next) {
+    res.locals.user = req.user;
+    next();
+});
+
+app.get('/panel/employees', adminAuth, function(req, res){
 	Employees.find({}, function(err,docs){
 		res.render('list', { title: 'List', employees: docs });
 	});
@@ -98,3 +103,8 @@ app.post('/admin', passport.authenticate('AdminLogin',
         failureFlash: true
     }
 ));
+
+app.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
