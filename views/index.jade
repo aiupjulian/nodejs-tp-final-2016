@@ -1,5 +1,46 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  header.header
+    .container
+      .row
+        .col-xs-12.col-md-12
+          h1= title
+          p Welcome to #{title}
+  .main
+    .container
+      .row
+        .col-xs-8.col-md-10
+          input#name(type='text', placeholder='Enter the name of the employee...')
+        .col-xs-4.col-md-2
+          button#submit Search
+      .row
+        .results.col-xs-12.col-md-12 No results
+  script.
+    var search = function() {
+      if($('#name').val().length <= 2) {
+        $('.results').empty();
+        return false;
+      }
+      $.getJSON('/employee/search/' + $('#name').val(), function(data) {
+        $('.results').empty();
+        for(var i = 0; i < data.length; i++) {
+          $('.results').append('<div class="employee col-xs-12 col-md-3">' +
+            '<img src="images/person.png" alt="person" style="">' +
+            data[i].firstName + ' ' + data[i].lastName + '</div>');
+        }
+      });
+    }
+    $(document).ready(function() {
+      $('button#submit').on('click', function() {
+        search();
+      });
+      $('#name').on('keyup', function() {
+        search();
+      });
+    });
+  style.
+    input { background: #f0f0f0; border:none; font-size:20px; padding: 5px; width: 100%; }
+    button#submit { background-color: blue; border:none; color: white; font-size:20px; padding: 5px 6px; }
+    .employee { max-height:120px; border: solid; margin:10px; padding:5px; background-color: grey; }
+    .employee > img { max-height:70px; max-width:70px; }
