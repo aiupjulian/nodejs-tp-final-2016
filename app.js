@@ -13,8 +13,8 @@ var flash = require('connect-flash');
 var expressValidator = require('express-validator');
 var passport = exports.passport = require('passport');
 
-var routes = require('./routes/index');
-var users = require('./routes/user');
+//var routes = require('./routes/index');
+//var users = require('./routes/user');
 
 var mongoose = require('mongoose');
 //SACAR CUANDO TERMINE (VA EN TESTS)
@@ -52,8 +52,8 @@ app.use(flash());
 
 require('./auth/local-strategy.js');
 
-app.use('/', routes);
-app.use('/users', users);
+//app.use('/', routes);
+//app.use('/users', users);
 
 require('./routes/main.js');
 
