@@ -19,7 +19,7 @@ app.use(function(req, res, next) {
 });
 
 app.get('/panel/employees', adminAuth, function(req, res){
-	Employees.find({}, function(err,docs){
+	Employees.find({}, {  }, function(err,docs){
 		res.render('list', { title: 'List', employees: docs });
 	});
 });
@@ -107,4 +107,19 @@ app.post('/admin', passport.authenticate('AdminLogin',
 app.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/');
+});
+
+app.get('/', function(req, res) {
+    res.render('index', { title: 'Employee Wiki' });
+});
+
+app.get('/employee/search/:keyword', function(req, res) {
+    var reg = new RegExp("([A-z])*" + req.params.keyword + "([A-z])*", 'ig');
+    Employees.find({ $or: [ { firstName: reg }, { lastName: reg } ] }, function(err, docs) {
+        if(!err) {
+            res.json(docs);
+        } else {
+            res.end(err);
+        }
+    });
 });
