@@ -93,7 +93,11 @@ app.post('/panel/employees/edit/:id', adminAuth, function(req, res){
 });
 
 app.get('/admin', function(req, res) {
-    res.render('admin', { title: 'Login', error: req.flash('error') });
+    if(!req.user) {
+        res.render('admin', { title: 'Login', error: req.flash('error') });
+    } else {
+        res.render('admin', { title: 'Hello ' + req.user.email });
+    }
 });
 
 app.post('/admin', passport.authenticate('AdminLogin',
