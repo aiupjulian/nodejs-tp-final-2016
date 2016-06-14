@@ -19,7 +19,7 @@ app.use(function(req, res, next) {
 });
 
 app.get('/panel/employees', adminAuth, function(req, res){
-	Employees.find({}, {  }, function(err,docs){
+	Employees.find({}, { firstName:1, lastName:1, email:1 }, function(err,docs){
 		res.render('list', { title: 'List', employees: docs });
 	});
 });
@@ -29,7 +29,6 @@ app.get('/panel/employees/new', adminAuth, function(req, res){
 });
 
 app.post('/panel/employees/new', adminAuth, function(req, res){
-	console.log(req.body);
     req.checkBody('password', 'Passwords do not match').equals(req.body.confirm);
     req.checkBody('email', 'Invalid email').isEmail();
     var errors = req.validationErrors();
@@ -64,7 +63,7 @@ app.get('/panel/employees/delete/:id', adminAuth, function(req, res){
 });
 
 app.get('/panel/employees/edit/:id', adminAuth, function(req, res){
-    Employees.findOne({ _id: req.params.id }, function(err, doc){
+    Employees.findOne({ _id: req.params.id }, { firstName:1, lastName:1, email:1 }, function(err, doc){
         if(!err){
             res.render('edit', { title: 'Edit', employee: doc});
         } else {
@@ -119,7 +118,7 @@ app.get('/', function(req, res) {
 
 app.get('/employee/search/:keyword', function(req, res) {
     var reg = new RegExp("([A-z])*" + req.params.keyword + "([A-z])*", 'ig');
-    Employees.find({ $or: [ { firstName: reg }, { lastName: reg } ] }, function(err, docs) {
+    Employees.find({ $or: [ { firstName: reg }, { lastName: reg } ] }, { firstName:1, lastName:1, email:1 }, function(err, docs) {
         if(!err) {
             res.json(docs);
         } else {
