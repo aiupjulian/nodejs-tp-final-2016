@@ -1,38 +1,67 @@
 extends layout
 
 block content
-  h1= title
-  if errors
-    ul
-      each val in errors
-        li=val
-  form(action='',method='post')
-    div
-      label(for='firstName') First name:
-      if !errors
-        input(type='text', name='firstName', id='firstName', placeholder='First name...')
-      else
-        input(type='text', name='firstName', id='firstName', placeholder='First name...', value=params.firstName)
-    div
-      label(for='lastName') Last name:
-      if !errors  
-        input(type='text', name='lastName', id='lastName', placeholder='Last name...')
-      else
-        input(type='text', name='lastName', id='lastName', placeholder='Last name...', value=params.lastName)
-    div
-      label(for='email') Email:
-      if !errors
-        input(type='text', name='email', id='email', placeholder='Email...')
-      else
-        input(type='text', name='email', id='email', placeholder='Email...', value=params.email)
-    div
-      label(for='password') Password:
-      input(type='password', name='password', id='password', placeholder='Password...')
-    div
-      label(for='confirm') Confirm:
-      input(type='password', name='confirm', id='confirm', placeholder='Confirm password...')
-    div
-      input(type='submit', value='Save')
+  header.header
+    .container
+      .row
+        .col-md-12.text-center
+          h1= title
+  .main
+    .container
+      .row
+        .col-md-12.text-center
+          .error
+            if errors
+              ul
+                each val in errors
+                  li=val
+      form(action='',method='post')
+        div
+          .row.row-centered
+            .col-md-1.col-xs-3.col-centered
+              label(for='firstName') First name:
+            .col-md-2.col-xs-8.col-centered
+              if !errors
+                input(type='text', name='firstName', id='firstName', placeholder='First name...')
+              else
+                input(type='text', name='firstName', id='firstName', placeholder='First name...', value=params.firstName)
+        div
+          .row.row-centered
+            .col-md-1.col-xs-3.col-centered    
+              label(for='lastName') Last name:
+            .col-md-2.col-xs-8.col-centered
+              if !errors
+                input(type='text', name='lastName', id='lastName', placeholder='Last name...')
+              else
+                input(type='text', name='lastName', id='lastName', placeholder='Last name...', value=params.lastName)
+        div
+          .row.row-centered
+            .col-md-1.col-xs-3.col-centered
+              label(for='email') Email:
+            .col-md-2.col-xs-8.col-centered
+              if !errors
+                input(type='text', name='email', id='email', placeholder='Email...')
+              else
+                input(type='text', name='email', id='email', placeholder='Email...', value=params.email)
+        div
+          .row.row-centered
+            .col-md-1.col-xs-3.col-centered
+              label(for='password') Password:
+            .col-md-2.col-xs-8.col-centered
+              input(type='password', name='password', id='password', placeholder='Password...')
+        div
+          .row.row-centered
+            .col-md-1.col-xs-3.col-centered
+              label(for='confirm') Confirm:
+            .col-md-2.col-xs-8.col-centered
+              input(type='password', name='confirm', id='confirm', placeholder='Confirm password...')
+        div
+          .row.row-centered
+            .col-md-1.col-xs-4.col-centered.text-center
+              input(type='submit', value='Save')
   style.
     form label { min-width: 80px; display: inline-block; }
     form > div { padding: 5px; }
+    .error { color:red; font-weight:bold; }
+    .row-centered { text-align:center; }
+    .col-centered { display:inline-block; float:none; text-align:left; margin-right:-4px; }

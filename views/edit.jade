@@ -1,19 +1,38 @@
 extends layout
 
 block content
-  h1= title
-  form(action='',method='post')
-    div
-      label(for='firstName') First name:
-      input(type='text', name='firstName', id='firstName', placeholder='First name...', value=employee.firstName)
-    div
-      label(for='lastName') Last name:
-      input(type='text', name='lastName', id='lastName', placeholder='Last name...', value=employee.lastName)
-    div
-      label(for='email') Email:
-      input(type='text', name='email', id='email', placeholder='Email...', value=employee.email)
-    div
-      input(type='submit', value='Save')
+  header.header
+    .container
+      .row
+        .col-md-12.text-center
+          h1= title
+  .main
+    .container
+      form(action='',method='post')
+        div
+          .row.row-centered
+            .col-md-1.col-xs-3.col-centered
+              label(for='firstName') First name:
+            .col-md-2.col-xs-8.col-centered
+              input(type='text', name='firstName', id='firstName', placeholder='First name...', value=employee.firstName)
+        div
+          .row.row-centered
+            .col-md-1.col-xs-3.col-centered
+              label(for='lastName') Last name:
+            .col-md-2.col-xs-8.col-centered
+              input(type='text', name='lastName', id='lastName', placeholder='Last name...', value=employee.lastName)
+        div
+          .row.row-centered
+            .col-md-1.col-xs-3.col-centered
+              label(for='email') Email:
+            .col-md-2.col-xs-8.col-centered
+              input(type='text', name='email', id='email', placeholder='Email...', value=employee.email)
+        div
+          .row.row-centered
+            .col-md-1.col-xs-4.col-centered.text-center
+              input(type='submit', value='Save')
   style.
     form label { min-width: 80px; display: inline-block; }
     form > div { padding: 5px; }
+    .row-centered { text-align:center; }
+    .col-centered { display:inline-block; float:none; text-align:left; margin-right:-4px; }
