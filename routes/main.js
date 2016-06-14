@@ -28,9 +28,16 @@ app.get('/panel/employees/new', adminAuth, function(req, res){
 	res.render('new', { title: 'New' });
 });
 
-app.post('/panel/employees/new', adminAuth, function(req, res){
+app.post('/panel/employees/new', adminAuth, function(req, res) {
+    req.checkBody('firstName', 'First name is required').notEmpty();
+    req.checkBody('lastName', 'Last name is required').notEmpty();
+    req.checkBody('email', 'Invalid email')
+        .notEmpty().withMessage('Email is required')
+        .isEmail();
+    req.checkBody('password', 'Password is required').notEmpty();
+    req.checkBody('confirm', 'Confirm is required').notEmpty();
     req.checkBody('password', 'Passwords do not match').equals(req.body.confirm);
-    req.checkBody('email', 'Invalid email').isEmail();
+
     var errors = req.validationErrors();
     if(errors) {
         errors = errors.map(function(a) {return a.msg;});
@@ -73,6 +80,19 @@ app.get('/panel/employees/edit/:id', adminAuth, function(req, res){
 });
 
 app.post('/panel/employees/edit/:id', adminAuth, function(req, res){
+    req.checkBody('firstName', 'First name is required').notEmpty();
+    req.checkBody('lastName', 'Last name is required').notEmpty();
+    req.checkBody('email', 'Invalid email')
+        .notEmpty().withMessage('Email is required')
+        .isEmail();
+
+    var errors = req.validationErrors();
+    if(errors) {
+        errors = errors.map(function(a) {return a.msg;});
+        res.render('edit', { title: 'Edit', errors: errors, employee: req.body });
+        return;
+    }
+    
     Employees.findOne({ _id: req.params.id }, function(err, doc){
         if(!err){
             doc.firstName = req.body.firstName;
