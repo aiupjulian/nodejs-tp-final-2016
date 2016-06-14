@@ -4,27 +4,35 @@ block content
   header.header
     .container
       .row
-        .col-md-8.col-md-offset-2.text-center
+        .col-md-12.text-center
           h1=title
   - if (!user) {
     .main
       .container
-        .row.row-centered
-          .error #{error}
         .row
-          .col-md-6.col-md-offset-2.col-xs-8.row-centered
-    .error #{error}
-    form(action='/admin', method='post')
-      div
-        label(for='email') Email:
-        input(type='text', name='email', id='email', placeholder='Email...')
-      div
-        label(for='password') Password:
-        input(type='password', name='password', id='password', placeholder='Password...')
-      div
-        input(type='submit', value='Login')
+          .col-md-12.text-center
+            .error #{error}
+        form(action='/admin', method='post')      
+          div
+            .row.row-centered
+              .col-md-1.col-xs-3.col-centered
+                label(for='email') Email:
+              .col-md-2.col-xs-8.col-centered
+                input(type='text', name='email', id='email', placeholder='Email...')
+          div
+            .row.row-centered
+              .col-md-1.col-xs-3.col-centered
+                label(for='password') Password:
+              .col-md-2.col-xs-8.col-centered
+                input(type='password', name='password', id='password', placeholder='Password...')
+          div
+            .row.row-centered
+              .col-md-1.col-xs-4.col-centered.text-center
+                input(type='submit', value='Login')
   - }
   style.
     form label { min-width: 80px; display: inline-block; }
     form > div { padding: 5px; }
     .error { color: red; font-weight: bold; }
+    .row-centered { text-align: center; }
+    .col-centered { display:inline-block; float:none; text-align:left; margin-right:-4px; }

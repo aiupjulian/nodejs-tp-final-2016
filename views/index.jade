@@ -4,18 +4,18 @@ block content
   header.header
     .container
       .row
-        .col-xs-12.col-md-12
+        .col-md-8.col-md-offset-2.text-center
           h1= title
           p Welcome to #{title}
   .main
     .container
-      .row
-        .col-xs-8.col-md-10
-          input#name(type='text', placeholder='Enter the name of the employee...')
-        .col-xs-4.col-md-2
+      .row.row-centered
+        .col-md-4.col-xs-8.col-centered
+          input#name(type='text', placeholder='Employee name...')
+        .col-md-2.col-xs-4.col-centered
           button#submit Search
-      .row
-        .results.col-xs-12.col-md-12 No results
+      .row.row-centered
+        .results.col-xs-12.col-md-12.text-center No results
   script.
     var search = function() {
       if($('#name').val().length <= 2) {
@@ -25,9 +25,11 @@ block content
       $.getJSON('/employee/search/' + $('#name').val(), function(data) {
         $('.results').empty();
         for(var i = 0; i < data.length; i++) {
-          $('.results').append('<div class="employee col-xs-12 col-md-3">' +
-            '<img src="images/person.png" alt="person" style="">' +
-            data[i].firstName + ' ' + data[i].lastName + '</div>');
+          $('.results').append('<div class="employee col-xs-12 col-md-3 col-centered col-fixed">' +
+            '<div class="img"><img src="images/person.png" alt="person"></div>' +
+            '<div class="name">' + data[i].firstName + ' ' + data[i].lastName + '</div>' +
+            '<div class="email"><a href="mailto:' + data[i].email + '">' + data[i].email + '</a></div>' +
+            '</div>');
         }
       });
     }
@@ -40,7 +42,12 @@ block content
       });
     });
   style.
-    input { background: #f0f0f0; border:none; font-size:20px; padding: 5px; width: 100%; }
-    button#submit { background-color: blue; border:none; color: white; font-size:20px; padding: 5px 6px; }
-    .employee { max-height:120px; border: solid; margin:10px; padding:5px; background-color: grey; }
-    .employee > img { max-height:70px; max-width:70px; }
+    input { background: #f0f0f0; border:none; font-size:20px; width: 100%; padding: 5px; }
+    button#submit { background-color: blue; border:none; color: white; font-size:20px; padding: 5px; width:100%; }
+    .results { margin-top:40px; }
+    .employee { max-height:120px; max-width:250px; border: solid; margin:5px; padding:5px; background-color:#A8A9AD; }
+    .img > img { max-height:70px; max-width:70px; float:left; }
+    .name { margin-left:80px; margin-top:15px; }
+    .email { margin-left:80px; margin-bottom:15px; }
+    .row-centered { text-align:center; }
+    .col-centered { display:inline-block; float:none; text-align:left; margin-right:-4px; }
