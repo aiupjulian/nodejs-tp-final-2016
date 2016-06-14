@@ -19,7 +19,6 @@ block content
               th First name
               th Last name
               th Email
-              th Password
               th Options
             - employees.forEach(function(v,i){
             tr
@@ -27,7 +26,6 @@ block content
               td=v.firstName
               td=v.lastName
               td=v.email
-              td=v.password
               td
                 a(href="/panel/employees/edit/"+v._id) Edit
                 | 
