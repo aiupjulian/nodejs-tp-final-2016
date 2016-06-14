@@ -8,6 +8,13 @@ block content
           h1= title
   .main
     .container
+      .row
+        .col-md-12.text-center
+          .error
+            if errors
+              ul
+                each val in errors
+                  li=val
       form(action='',method='post')
         div
           .row.row-centered
@@ -34,5 +41,6 @@ block content
   style.
     form label { min-width: 80px; display: inline-block; }
     form > div { padding: 5px; }
+    .error { color:red; font-weight:bold; }
     .row-centered { text-align:center; }
     .col-centered { display:inline-block; float:none; text-align:left; margin-right:-4px; }
